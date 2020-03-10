@@ -52,8 +52,9 @@ public class Board {
 	 * @param column
 	 */
 	public boolean makeMove(char playerChar, int column) {
+		System.out.println("starting");
 		for (int i = ROWS - 1; i >= 0; i--) {
-			if (board[i][column] != ' ') {
+			if (board[i][column] == ' ') {
 				board[i][column] = playerChar;
 				movesMade++;
 				return true;
@@ -209,6 +210,30 @@ public class Board {
 	public static void main(String[] args) {
 		Board testBoard = new Board();
 		System.out.println(testBoard);
+	}
+
+	public int getMovesMade() {
+		return movesMade;
+	}
+
+	public void setMovesMade(int movesMade) {
+		this.movesMade = movesMade;
+	}
+
+	public int getROWS() {
+		return ROWS;
+	}
+
+	public int getCOLUMNS() {
+		return COLUMNS;
+	}
+
+	public int getFOUR_IN_A_ROW() {
+		return FOUR_IN_A_ROW;
+	}
+
+	public void setBoard(char[][] board) {
+		this.board = board;
 	}
 	
 	
