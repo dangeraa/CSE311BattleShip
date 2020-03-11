@@ -164,7 +164,7 @@ public class Board {
 			result = result + " ";
 		}
 		// Diagonals going right
-		for (int column = 1; column < COLUMNS; ++ column) {
+		for (int column = COLUMNS - 2; column >= 0;  --column) {
 			int currColumn = column;
 			for (int row = 0; row < ROWS && currColumn < COLUMNS; row++) {
 				result = result + board[row][currColumn];
