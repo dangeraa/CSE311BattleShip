@@ -52,7 +52,7 @@ public class Board {
 	 * @param column
 	 */
 	public boolean makeMove(char playerChar, int column) {
-		System.out.println("starting");
+		
 		for (int i = ROWS - 1; i >= 0; i--) {
 			if (board[i][column] == ' ') {
 				board[i][column] = playerChar;
@@ -184,6 +184,7 @@ public class Board {
 			}
 			result = result + " ";
 		}
+		
 		return result;
 	}
 	
@@ -207,11 +208,15 @@ public class Board {
 				streak = streak + currentChar;
 			} else {
 				maxStreak = Math.max(streak.length(), maxStreak);
-				streak = "";
+				if(currentChar == ' ')
+					streak = "";
+				else
+					streak = "" + currentChar;
+				
 			}
 			
 		}
-		return maxStreak;
+		return Math.max(streak.length(), maxStreak);
 		
 	}
 	
@@ -223,7 +228,7 @@ public class Board {
 	
 	
 	public boolean isWinningBoard() {
-		if (streak(highestHorizontalStreak()) >= 4
+		if 		  (streak(highestHorizontalStreak()) >= 4
 				|| streak(highestVerticalStreak()) >= 4
 				|| streak(highestRightDiagonalStreak()) >= 4
 				|| streak(highestLeftDiagonalStreak()) >= 4) {
@@ -250,10 +255,6 @@ public class Board {
 		return returnedString;
 	}
 	
-	public static void main(String[] args) {
-		Board testBoard = new Board();
-		System.out.println(testBoard);
-	}
 
 	public int getMovesMade() {
 		return movesMade;

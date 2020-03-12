@@ -41,9 +41,9 @@ public class ConnectFourFrame extends JPanel {
 		g.setColor(Color.BLACK);
 		if(board.isWinningBoard()) {
 			if(board.getMoves()%2 == 0)
-				g.drawString("Player " + 2 + "Wins!", 10, 500);
+				g.drawString("Player " + 2 + " Wins!", 10, 500);
 			else
-				g.drawString("Player " + 1 + "Wins!", 10, 500);
+				g.drawString("Player " + 1 + " Wins!", 10, 500);
 		}
 		startY = 100;
 		
