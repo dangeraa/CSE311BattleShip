@@ -38,12 +38,16 @@ public class ConnectFourFrame extends JPanel {
 			startX = temp;
 			startY += width;
 		}
+		g.setColor(Color.BLACK);
 		if(board.isWinningBoard()) {
-			g.drawString("Player " + board.getMoves()%2 + "Wins!", 10, 500);
+			if(board.getMoves()%2 == 0)
+				g.drawString("Player " + 2 + "Wins!", 10, 500);
+			else
+				g.drawString("Player " + 1 + "Wins!", 10, 500);
 		}
 		startY = 100;
 		
-		g.setColor(Color.BLACK);
+		
 		
 		if(board.getMoves()%2==0) {
 			g.drawString("Red's Turn", 600, 100);
@@ -54,20 +58,7 @@ public class ConnectFourFrame extends JPanel {
 	}
 	
 	
-	public static void main(String[] args) {
-		
-		ConnectFourFrame cff = new ConnectFourFrame();
-		
-		JFrame jf = new JFrame();
-		
-		jf.setTitle("ConnectFour");
-		jf.setSize(700,700);
-		jf.setVisible(true);
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		jf.getContentPane().add(cff);
-		
-	}
+	
 	public ConnectFourFrame() {
 		setLayout(null);
 		
