@@ -176,16 +176,59 @@ public class Board {
 		return result;
 	}
 	
-	private int highestVerticalStreak() {
-		return 0;
+	private String highestHorizontalStreak() {
+		String result = "";
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLUMNS; j++) {
+				result = result + board[i][j];
+			}
+			result = result + " ";
+		}
+		return result;
+	}
+	
+	private String highestVerticalStreak() {
+		String result = "";
+		for (int i = 0; i < COLUMNS; i++) {
+			for (int j = 0; j < ROWS; j++) {
+				result = result + board[j][i];
+			}
+			result = result + " ";
+		}
+		return result;
+	}
+	
+	private int streak(String boardOrder) {
+		int maxStreak = 0;
+		String streak = "";
+		for (int i = 0; i < boardOrder.length(); i++) {
+			char currentChar = boardOrder.charAt(i);
+			if (currentChar != ' ' && (streak.length() == 0 || currentChar == streak.charAt(0))) {
+				streak = streak + currentChar;
+			} else {
+				maxStreak = Math.max(streak.length(), maxStreak);
+				streak = "";
+			}
+			
+		}
+		return maxStreak;
+		
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
+	
+	
+	
 	public boolean isWinningBoard() {
-		// TO DO
+		if (streak(highestHorizontalStreak()) >= 4
+				|| streak(highestVerticalStreak()) >= 4
+				|| streak(highestRightDiagonalStreak()) >= 4
+				|| streak(highestLeftDiagonalStreak()) >= 4) {
+			return true;
+		}
 		return false;
 	}
 	
