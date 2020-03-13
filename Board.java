@@ -1,16 +1,19 @@
 /**
- * 
- * @author Cogan
- * A game board that consists of six rows and seven columns
+ * Logic of Connect Four game is here, also creates text-based view
+ * @author Abby Danger, Scott Cogen, Andrew Grimes
+ *
  */
 public class Board {
+	
+	/*Sets board demensions*/
 	private final int ROWS = 6;
 	private final int COLUMNS = 7;
 	private final int FOUR_IN_A_ROW = 4;
 	private int movesMade = 0;
 	private char[][] board = new char[ROWS][COLUMNS];
+	
 	/**
-	 * Just gives the board
+	 * Creates the board
 	 * Note the board should only
 	 * return a copy of the this board
 	 * @return the board
@@ -35,6 +38,10 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Gets the current board
+	 * @return the board
+	 */
 	public char[][] getBoard() {
 		char[][] returnedBoard = new char[ROWS][COLUMNS];
 		for (int i = 0; i < ROWS; i++) {
@@ -46,13 +53,13 @@ public class Board {
 	}
 	
 	/**
-	 * 
+	 * Allows the player to make a move, stores their move in the array
 	 * @param playerChar
 	 * @param row
 	 * @param column
+	 * @return true if they made a move, false if not
 	 */
 	public boolean makeMove(char playerChar, int column) {
-		
 		for (int i = ROWS - 1; i >= 0; i--) {
 			if (board[i][column] == ' ') {
 				board[i][column] = playerChar;
@@ -61,15 +68,23 @@ public class Board {
 			}
 		}
 		return false;
-		
 	}
 	
+	/**
+	 * Gets the amount of moves that were just made
+	 * @return number of moves
+	 */
 	public int getMoves() {
 		return movesMade;
 	}
 	
+	/**
+	 * Creates the combination for right diagonal streaks
+	 * @return string of the streak
+	 */
 	private String highestRightDiagonalStreak() {
 		String result = "";
+		
 		// Diagonals going up
 		for (int row = ROWS - 1; row >= 0; row--) {
 			int currRow = row; // The row of the diagonal
@@ -77,82 +92,29 @@ public class Board {
 			{
 				result = result + board[currRow][column];
 				currRow++;
-				
-				/**
-				 * Example (Might help to draw): 
-				 * iteration 1 (Second for loop)
-				 * row = 3 I just chose this but it starts at 5 and goes to 0
-				 * currRow = 3
-				 * column = 0 
-				 * 
-				 * iteration 2
-				 * row = 3
-				 * currRow = 4
-				 * column = 1
-				 * 
-				 * iteration 3
-				 * row = 3
-				 * currRow = 5
-				 * column = 2
-				 * 
-				 * iteration 4 (STOP since currRow is not less than rows)
-				 * row = 3
-				 * currRow = 6
-				 * column = 3
-				 */
 			}
 			result = result + " ";
 		}
+		
 		// Diagonals going right
 		for (int column = 1; column < COLUMNS; column++) {
 			int currColumn = column; // The column of the diagonal
 			for (int row = 0; row < ROWS && currColumn < COLUMNS; row++) {
 				result = result + board[row][currColumn];
 				currColumn++;
-				
-				/**
-				 * Example (Might help to draw): 
-				 * iteration 1 (Second for loop)
-				 * column = 2 I just chose this but it starts at 1 (Rows took care of 0)and goes to 6 
-				 * currColumn = 2
-				 * row = 0 
-				 * 
-				 * iteration 2
-				 * column = 2
-				 * currColumn = 3
-				 * row = 1
-				 * 
-				 * iteration 3
-				 * column = 2
-				 * currColumn = 4
-				 * row = 2
-				 * 
-				 * iteration 4
-				 * column = 2
-				 * currColumn = 5
-				 * row = 3
-				 * 
-				 * iteration 5
-				 * column = 2
-				 * currColumn = 6 Doesn't stop since there are seven columns not six
-				 * row = 4
-				 * 
-				 * iteration 6 (STOP currColumn = 7)
-				 * column = 2
-				 * currColumn = 7
-				 * row = 5
-				 */
 			}
 			result = result + " ";
 		}
-		
 		return result;
 	}
 	
+	/**
+	 * Creates the combination for left diagonal streaks
+	 * @return string of the streak
+	 */
 	private String highestLeftDiagonalStreak() {
 		String result = "";
-		// NOT DONE WITH THIS YET
-		// NEEDS TO BE ALMOST OPPOSITE OF RIGHTDIAGONAL
+		
 		// Diagonals going up
 		for (int row = ROWS - 1; row >= 0; row--) {
 			int currRow = row;
@@ -163,6 +125,7 @@ public class Board {
 			}
 			result = result + " ";
 		}
+		
 		// Diagonals going right
 		for (int column = COLUMNS - 2; column >= 0;  --column) {
 			int currColumn = column;
@@ -172,10 +135,13 @@ public class Board {
 			}
 			result = result + " ";
 		}
-		
 		return result;
 	}
 	
+	/**
+	 * Creates the combination for horizontal streaks
+	 * @return string of the streak
+	 */
 	private String highestHorizontalStreak() {
 		String result = "";
 		for (int i = 0; i < ROWS; i++) {
@@ -184,10 +150,13 @@ public class Board {
 			}
 			result = result + " ";
 		}
-		
 		return result;
 	}
 	
+	/**
+	 * Creates the combination for vertical streaks
+	 * @return string of the streak
+	 */
 	private String highestVerticalStreak() {
 		String result = "";
 		for (int i = 0; i < COLUMNS; i++) {
@@ -199,6 +168,12 @@ public class Board {
 		return result;
 	}
 	
+	
+	/**
+	 * Determines if the order of the board is a streak or not
+	 * @param boardOrder
+	 * @return the length of the streak
+	 */
 	private int streak(String boardOrder) {
 		int maxStreak = 0;
 		String streak = "";
@@ -212,21 +187,16 @@ public class Board {
 					streak = "";
 				else
 					streak = "" + currentChar;
-				
 			}
 			
 		}
 		return Math.max(streak.length(), maxStreak);
-		
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Determines if the board contains a winning combination
+	 * @return true if the board contains a winning combination, false if not
 	 */
-	
-	
-	
 	public boolean isWinningBoard() {
 		if 		  (streak(highestHorizontalStreak()) >= 4
 				|| streak(highestVerticalStreak()) >= 4
@@ -238,8 +208,9 @@ public class Board {
 	}
 	
 	/**
+	 * Simple method that represents the board as a string
 	 * @Override
-	 * @return
+	 * @return board as a string
 	 */
 	public String toString() {
 		String returnedString = "";
@@ -254,8 +225,10 @@ public class Board {
 		}
 		return returnedString;
 	}
-	
 
+	
+	/*Helper Methods*/
+	
 	public int getMovesMade() {
 		return movesMade;
 	}
@@ -279,6 +252,5 @@ public class Board {
 	public void setBoard(char[][] board) {
 		this.board = board;
 	}
-	
 	
 }
